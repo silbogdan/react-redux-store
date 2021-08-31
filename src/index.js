@@ -3,10 +3,41 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import combinedReducers from './reducers';
+import { Provider } from 'react-redux';
+import '@fontsource/roboto';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const store = createStore(
+  combinedReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()  
+);
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: "#62efff",
+      dark: "#008ba3",
+      main: "#00bcd4",
+      contrastText: "#000000"
+    },
+    secondary: {
+      light: "#819ca9",
+      dark: "#29434e",
+      main: "#546e7a",
+      contrastText: "#ffffff"
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
