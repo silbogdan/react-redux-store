@@ -14,9 +14,11 @@ pipeline {
             }
         }
         stage('Build Docker image') {
-            script {
-                VERSION = sh(returnStdout: true, script: "git tag --contains").trim()
-                sh "docker build -t shopcart:$VERSION ."
+            steps {
+                script {
+                    VERSION = sh(returnStdout: true, script: "git tag --contains").trim()
+                    sh "docker build -t shopcart:$VERSION ."
+                }
             }
         }
         stage('Run container') {
