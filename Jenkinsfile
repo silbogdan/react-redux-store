@@ -6,9 +6,9 @@ pipeline {
                 sh '''
                     if [ -z $(docker ps -q) ]
                     then
-                        docker kill $(docker ps -q)
-                    else
                         echo "No containers active"
+                    else
+                        docker kill $(docker ps -q)
                     fi
                 '''
             }
