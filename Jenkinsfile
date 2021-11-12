@@ -14,10 +14,8 @@ pipeline {
             }
         }
         stage('Build Docker image') {
-            environment {
-                VERSION = sh(returnStdout: true, script: "git tag --contains").trim()
-            }
             steps {
+                let VERSION = sh(returnStdout: true, script: "git tag --contains").trim()
                 sh "docker build -t shopcart:$VERSION ."
             }
         }
