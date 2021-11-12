@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Build Docker image') {
             steps {
-                sh "docker build -t shopcart ."
+                sh "./build.sh"
             }
         }
         stage('Run container') {
