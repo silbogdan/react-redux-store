@@ -15,10 +15,10 @@ pipeline {
         }
         stage('Build Docker image') {
             environment {
-                VERSION = "${env.TAG_NAME}"
+                VERSION = sh(returnStdout: true, script: "git tag --contains").trim()
             }
             steps {
-                sh "docker build -t shopcart:$VERSION"
+                sh "docker build -t shopcart:$VERSION ."
             }
         }
         stage('Run container') {
