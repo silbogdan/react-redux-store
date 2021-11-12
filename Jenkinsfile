@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    VERSION = sh(returnStdout: true, script: "git tag --contains").trim()
+                    VERSION = sh(returnStdout: true, script: "git tag | tail -1").trim()
                     sh "docker build -t shopcart:$VERSION ."
                 }
             }
