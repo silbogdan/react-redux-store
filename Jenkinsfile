@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Run container') {
             steps {
-                sh "docker run -p 3000:3000 shopcart"
+                sh "docker run -d -p 3000:3000 shopcart"
             }
         }
     }
