@@ -14,8 +14,10 @@ pipeline {
             }
         }
         stage('Build Docker image') {
+            environment {
+                VERSION = "${env.TAG_NAME}"
             steps {
-                sh "./build.sh"
+                sh "docker build -t shopcart:$VERSION"
             }
         }
         stage('Run container') {
