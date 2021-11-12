@@ -47,7 +47,7 @@ const Navbar = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Shopping Cart
+            Shopping Cart Docker
           </Typography>
             <div>
               <IconButton
