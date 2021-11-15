@@ -13,18 +13,23 @@ pipeline {
                 '''
             }
         }
-        stage('Build Docker image') {
+        stage('Mention branch') {
             steps {
-                script {
-                    VERSION = sh(returnStdout: true, script: "git tag | tail -1").trim()
-                    sh "docker build -t shopcart:$VERSION ."
-                }
+                echo "Current branch: ${GIT_BRANCH}"
             }
         }
-        stage('Run container') {
-            steps {
-                sh "docker run -d -p 3000:3000 shopcart:$VERSION"
-            }
-        }
+        // stage('Build Docker image') {
+        //     steps {
+        //         script {
+        //             VERSION = sh(returnStdout: true, script: "git tag | tail -1").trim()
+        //             sh "docker build -t shopcart:$VERSION ."
+        //         }
+        //     }
+        // }
+        // stage('Run container') {
+        //     steps {
+        //         sh "docker run -d -p 3000:3000 shopcart:$VERSION"
+        //     }
+        // }
     }
 }
