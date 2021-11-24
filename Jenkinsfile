@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        VERSION = sh(returnStdout: true, script: "git tag | tail -1").trim()
+    }
     stages {
         stage('Stop all containers') {
             steps {
@@ -15,22 +18,19 @@ pipeline {
         }
         stage('Build Docker images') {
             steps {
-                script {
-                    VERSION = sh(returnStdout: true, script: "git tag | tail -1").trim()
-                    sh '''
-                        if [ -z $(docker image ls -q shopcart:$VERSION) ]; then
-                            docker build -t shopcart:$VERSION .
-                        fi
+                sh '''
+                    if [ -z $(docker image ls -q shopcart:$VERSION) ]; then
+                        docker build -t shopcart:$VERSION .
+                    fi
 
-                        if [ -z $(docker image ls -q shopcart-test:$VERSION) ]; then
-                            docker build -t shopcart-test:$VERSION .
-                        fi 
+                    if [ -z $(docker image ls -q shopcart-test:$VERSION) ]; then
+                        docker build -t shopcart-test:$VERSION .
+                    fi 
 
-                        if [ -z $(docker image ls -q shopcart-stage:$VERSION) ]; then
-                            docker build -t shopcart-stage:$VERSION .
-                        fi                                               
-                    '''
-                }
+                    if [ -z $(docker image ls -q shopcart-stage:$VERSION) ]; then
+                        docker build -t shopcart-stage:$VERSION .
+                    fi                                               
+                '''
             }
         }
         stage('Run tests') {
